@@ -5,17 +5,17 @@ sed -e "s/^MasterServers.*/MasterServers=$IP/g" /etc/nxagentd.conf \
 echo "Adjusted agent's MasterServers:"
 grep "MasterServers" /etc/nxagentd.conf
 
-echo "Starting PostgreSQL.." \
-&& sudo -u postgres pg_ctl -D /var/lib/pgsql/data start \
+echo "Starting PostgreSQL.."
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
 
-&& echo "Wait a little for DB to start.." \
-&& sleep 5 \
+echo "Wait a little for DB to start.."
+sleep 5
 
-&& echo "Start NetXMS server.." \
-&& /opt/netxms/bin/netxmsd -e -d \
+echo "Start NetXMS server.."
+/opt/netxms/bin/netxmsd -e -d
 
-&& echo "Start NetXMS agent.." \
-&& /opt/netxms/bin/nxagentd -d \
+echo "Start NetXMS agent.."
+/opt/netxms/bin/nxagentd -d
 
-&& echo "Press [CTRL+C] to stop.." \
-&& while true; do sleep 3; done
+echo "Press [CTRL+C] to stop.."
+while true; do sleep 3; done
