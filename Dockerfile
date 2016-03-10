@@ -55,8 +55,9 @@ RUN mkdir /var/lib/pgsql \
  && sudo -u postgres /usr/bin/psql -f /opt/netxms/share/netxms/sql/dbinit_pgsql.sql netxms netxms \
  && sudo -u postgres pg_ctl -D /var/lib/pgsql/data stop
 
-ADD netxmsd.conf nxagentd.conf /etc
-ADD start stop /usr/local/bin
+ADD netxmsd.conf nxagentd.conf /etc/
+ADD start stop /usr/local/bin/
+RUN chmod 755 /usr/local/bin/start /usr/local/bin/stop
 
 EXPOSE 4701
 
