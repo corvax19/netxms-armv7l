@@ -1,11 +1,21 @@
 #!/bin/ash
+IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+sed -e "s/^MasterServers.*/MasterServers=$IP/g" /etc/nxagent.conf \
+ > /etc/nxagent.fixed && mv /etc/nxagent.fixed /etc/nxagent.conf
+echo "Adjusted agent's MasterServers:"
+grep "MasterServers" /etc/nxagent.conf
+
 echo "Starting PostgreSQL.." \
 && sudo -u postgres pg_ctl -D /var/lib/pgsql/data start \
+
 && echo "Wait a little for DB to start.." \
 && sleep 5 \
+
 && echo "Start NetXMS server.." \
 && /opt/netxms/bin/netxmsd -e -d \
+
 && echo "Start NetXMS agent.." \
 && /opt/netxms/bin/nxagentd -d \
+
 && echo "Press [CTRL+C] to stop.." \
 && while true; do sleep 3; done
