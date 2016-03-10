@@ -6,4 +6,6 @@ echo "Starting PostgreSQL.." \
 && echo "Start NetXMS server.." \
 && /opt/netxms/bin/netxmsd -e -d \
 && echo "Start NetXMS agent.." \
-&& /opt/netxms/bin/nxagentd -d
+&& /opt/netxms/bin/nxagentd -d \
+&& echo "Press [CTRL+C] to stop.." \
+&& while true; do sleep 3; done
