@@ -52,16 +52,11 @@ RUN mkdir /var/lib/pgsql \
  && sudo -u postgres /usr/bin/createdb -h 127.0.0.1 -p 5432 -E SQL_ASCII -T template0 -e netxms \
  && sudo -u postgres /usr/bin/psql -c "CREATE USER netxms WITH PASSWORD 'netxms';" \
  && sudo -u postgres /usr/bin/psql -c "GRANT ALL PRIVILEGES ON DATABASE \"netxms\" TO netxms;" \
- && sudo -u postgres /usr/bin/psql -f /opt/netxms/share/netxms/sql/dbinit_pgsql.sql netxms netxms
+ && sudo -u postgres /usr/bin/psql -f /opt/netxms/share/netxms/sql/dbinit_pgsql.sql netxms netxms \
+ && sudo -u postgres pg_ctl -D /var/lib/pgsql/data stop
 
-RUN mkdir -p ${netxms_prefix}/etc; \
-    echo "DBDriver = /opt/netxms/lib/netxms/dbdrv/pgsql.ddr" >> ${netxmsd_cfg}; \
-    echo "DBServer = localhost" >> ${netxmsd_cfg}; \
-    echo "DBName = netxms" >> ${netxmsd_cfg}; \
-    echo "DBLogin = netxms" >> ${netxmsd_cfg}; \
-    echo "DBPassword = netxms" >> ${netxmsd_cfg}; \
-    echo "LogFailedSQLQueries = yes" >> ${netxmsd_cfg}; \
-    echo "LogFile = {syslog}" >> ${netxmsd_cfg}
+ADD netxmsd.conf /etc
+ADD nxagentd.conf /etc
 
 EXPOSE 4701
 
