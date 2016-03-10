@@ -1,9 +1,9 @@
 #!/bin/ash
 IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
-sed -e "s/^MasterServers.*/MasterServers=$IP/g" /etc/nxagent.conf \
- > /etc/nxagent.fixed && mv /etc/nxagent.fixed /etc/nxagent.conf
+sed -e "s/^MasterServers.*/MasterServers=$IP/g" /etc/nxagentd.conf \
+ > /etc/nxagentd.fixed && mv /etc/nxagentd.fixed /etc/nxagentd.conf
 echo "Adjusted agent's MasterServers:"
-grep "MasterServers" /etc/nxagent.conf
+grep "MasterServers" /etc/nxagentd.conf
 
 echo "Starting PostgreSQL.." \
 && sudo -u postgres pg_ctl -D /var/lib/pgsql/data start \
