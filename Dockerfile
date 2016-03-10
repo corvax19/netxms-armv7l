@@ -55,11 +55,9 @@ RUN mkdir /var/lib/pgsql \
  && sudo -u postgres /usr/bin/psql -f /opt/netxms/share/netxms/sql/dbinit_pgsql.sql netxms netxms \
  && sudo -u postgres pg_ctl -D /var/lib/pgsql/data stop
 
-ADD netxmsd.conf /etc
-ADD nxagentd.conf /etc
+ADD netxmsd.conf nxagentd.conf /etc
+ADD start stop /usr/local/bin
 
 EXPOSE 4701
 
-#ENTRYPOINT "sudo -u postgres pg_ctl -D /var/lib/pgsql/data start && sleep 5 && /opt/netxms/bin/netxmsd"
-#ENTRYPOINT "sudo -u postgres pg_ctl -D /var/lib/pgsql/data start"
-#ENTRYPOINT "ash"
+CMD ["/usr/local/bin/start"]

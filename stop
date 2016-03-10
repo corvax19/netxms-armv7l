@@ -1,0 +1,8 @@
+#!/bin/ash
+&& echo "Stop NetXMS agent.." \
+&& killall nxagentd \
+&& echo "Stop NetXMS server.." \
+&& killall netxmsd \
+echo "Stop PostgreSQL.." \
+&& sudo -u postgres pg_ctl -D /var/lib/pgsql/data stop
+

@@ -1,0 +1,9 @@
+#!/bin/ash
+echo "Starting PostgreSQL.." \
+&& sudo -u postgres pg_ctl -D /var/lib/pgsql/data start \
+&& echo "Wait a little for DB to start.." \
+&& sleep 5 \
+&& echo "Start NetXMS server.." \
+&& /opt/netxms/bin/netxmsd -e -d \
+&& echo "Start NetXMS agent.." \
+&& /opt/netxms/bin/nxagentd -d
